@@ -560,13 +560,35 @@ Commit and verify your changes:
 Display the Tasks via CoffeeScript and jQuery
 ---------------------------------------------
 
+In the body of the `app/views/index.scala.html` file add a place to display the tasks about the form:
 
+    <ul id="tasks"></ul>
+
+
+Create a new file named `app/assets/javascripts/index.coffee` (and create the necessary directories) containing a simple CoffeeScript application that uses jQuery to load and display the tasks:
+
+    $ ->
+      $.get "/tasks", (data) ->
+        $.each data, (index, task) ->
+          $("#tasks").append $("<li>").text task.contents
+
+This makes a `get` request to `/tasks` for the JSON serialized list of `Task` objects and then adds a new list item to the page element with the id of `tasks` for each `Task`.
+
+
+Update the `app/views/main.scala.html` file to include the compiled and minified version of the `index.coffee` JavaScript by adding the following after the line that includes jQuery:
+
+    <script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
+
+
+Check out the app in your browser:
+
+http://localhost:9000
 
 
 Commit and verify your changes:
 
-    git add 
-    git commit -am ""
+    git add app/views/index.scala.html app/assets/javascripts/index.coffee app/views/main.scala.html
+    git commit -am "Display the list of tasks using jQuery and CoffeeScript"
     git diff upstream java-task_coffeescript
 
 
