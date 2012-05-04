@@ -593,20 +593,67 @@ Commit and verify your changes:
 
 
 
-Make the App pretty with Twitter Bootstrap
+Make the App Pretty with Twitter Bootstrap
 ------------------------------------------
+
+Twitter Bootstrap is a CSS library that makes it easy to make a web app look better.  To use Twitter Bootstrap start by adding the WebJar dependency and repository resolver to the `project/Build.scala` file:
+
+        val appDependencies = Seq(
+          "com.github.twitter" % "bootstrap" % "2.0.2"
+        )
+    
+        val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+          resolvers += "webjars" at "http://webjars.github.com/m2"
+        )
+
+
+Now restart the Play server so that it will fetch the new dependency.  To use Bootstrap simply include the following line in the `app/views/main.scala.html` file, making sure it is between the `<title>` and the `main.css` lines:
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+
+
+Update the body of the `app/views/index.scala.html` file to use Bootstrap for a nice header, better layout, and nicer default fonts:
+
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a id="titleLink" class="brand" href="/">@message.toUpperCase</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="container">
+            <ul id="tasks"></ul>
+       
+            @helper.form(action = routes.Application.addTask()) {
+                <input name="contents"/>
+                <input type="submit"/>
+            }
+        </div>
+
+
+Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
+
+    body {
+        margin-top: 50px;
+    }
+
+
+Load the app in your browser and verify it still works:
+
+http://localhost:9000
 
 
 Commit and verify your changes:
 
-    git add 
-    git commit -am ""
+    git commit -am "Add Bootstrap"
     git diff upstream java-bootstrap
 
 
 
 Add Form Validation
 -------------------
+
 
 
 Commit and verify your changes:
