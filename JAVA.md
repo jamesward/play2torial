@@ -103,8 +103,7 @@ Now start the Play app by running:
 
     play ~run
 
-Open the following URL in your browser to verify the app is working:
-
+Open the following URL in your browser to verify the app is working:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
@@ -124,7 +123,7 @@ Add a new route to handle GET requests to `/foo` with a call to `controllers.App
     GET     /foo                        controllers.Application.index()
 
 
-Now try to open the following URL in your browser:
+Now try to open the following URL in your browser:  
 [http://localhost:9000/foo](http://localhost:9000/foo)
 
 
@@ -139,7 +138,7 @@ Commit and verify your changes:
 
 Test a Route
 ------------
-test
+
 Now that you have a new route for `/foo` lets create a test for that route.  Now create a new file `test/FooTest.java` file containing:
 
     import org.junit.Test;
@@ -193,7 +192,7 @@ The `index()` method body looks like:
 
     return ok(index.render("Your new application is ready."));
 
-Edit the `Application.java` file and change the `Your new application is ready.` string to `hello, world`.  Save the file and then reload the following URL in your browser:
+Edit the `Application.java` file and change the `Your new application is ready.` string to `hello, world`.  Save the file and then reload the following URL in your browser:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
@@ -209,7 +208,7 @@ Commit and verify that your changes:
 Test a Controller
 -----------------
 
-You can do functional tests against a controller by simply creating a new JUnit Test.  Create a new file named "test/ApplicationTest.java" file containing:
+You can do functional tests against a controller by simply creating a new JUnit Test.  Create a new file named `test/ApplicationTest.java` file containing:
 
     import org.junit.Test;
     import play.mvc.Result;
@@ -257,7 +256,7 @@ You should see something like:
 
 Commit and verify that your changes:
 
-    git add ` 
+    git add test/ApplicationTest.java
     git commit -am "added Application controller test"
     git diff upstream/java-test_controller
 
@@ -285,7 +284,7 @@ Change the Play welcome message to uppercase:
 
     @play20.welcome(message.toUpperCase, style = "Java")
 
-View your changes in the browser:
+View your changes in the browser:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
@@ -321,9 +320,9 @@ To test a template directly, create a new `test/IndexTest.java` file containing:
     
       @Test
       public void indexTemplate() {
-          Content html = views.html.index.render("test");
-          assertThat(contentType(html)).isEqualTo("text/html");
-          assertThat(contentAsString(html)).contains("TEST");
+        Content html = views.html.index.render("test");
+        assertThat(contentType(html)).isEqualTo("text/html");
+        assertThat(contentAsString(html)).contains("TEST");
       }
     
     }
@@ -372,24 +371,22 @@ Deploying your Play app on the cloud is easy with Heroku!  First create a new fi
 
     web: target/start -Dhttp.port=${PORT} ${JAVA_OPTS}
 
+That tells Heroku how to start the Play application.
+
 
 Commit and verify your changes:
 
     git add Procfile
     git commit -m "add Procfile for Heroku"
-    git diff java-heroku_create
+    git diff upstream/java-heroku_create
 
 
-That tells Heroku how to start the Play application.
-
-Now install the Heroku Toolbelt:
-
-http://toolbelt.heroku.com
+Now install the Heroku Toolbelt:  
+[http://toolbelt.heroku.com](http://toolbelt.heroku.com)
 
 
-Signup for a Heroku account:
-
-http://heroku.com/signup
+Signup for a Heroku account:  
+[http://heroku.com/signup](http://heroku.com/signup)
 
 
 Login to Heroku from the command line:
@@ -405,6 +402,8 @@ Provision a new application on Heroku:
 Now push this applicaiton to Heroku:
 
     git push heroku master
+
+Heroku will build the app with SBT and then run it on a [dyno](https://devcenter.heroku.com/articles/dynos).
 
 
 Open the application, now running on the cloud, in your browser:
@@ -524,7 +523,7 @@ Now create a form in the `app/views/index.scala.html` template for adding new `T
       }
 
 
-Test out the new UI by loading the app in your browser:
+Test out the new UI by loading the app in your browser:  
 [http://localhost:9000/](http://localhost:9000/)
 
 You will be prompted to run the database evolutions.  Just click the `Apply this script now!` button.
@@ -561,7 +560,7 @@ Add a new route to the `conf/routes` file to get the tasks as JSON serialized da
     GET     /tasks                      controllers.Application.getTasks()
 
 
-After adding a new `Task` load the following URL in your browser:
+After adding a new `Task` load the following URL in your browser:  
 [http://localhost:9000/tasks](http://localhost:9000/tasks)
 
 
@@ -598,7 +597,7 @@ Update the `app/views/main.scala.html` file to include the compiled and minified
     <script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
 
 
-Check out the app in your browser:
+Check out the app in your browser:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
@@ -699,7 +698,7 @@ Run the tests to make sure they still pass:
     play test
 
 
-Load the app in your browser and verify it still works:
+Load the app in your browser and verify it still works:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
@@ -739,7 +738,7 @@ Update the `addTask` method on the `app/controllers/Application.java` controller
       }
 
 
-Load the app in your browser verify that adding an empty Task displays an error:
+Load the app in your browser verify that adding an empty Task displays an error:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
