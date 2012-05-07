@@ -3,7 +3,7 @@
 
 This tutorial will help teach you how to build Java web applications with Play Framework 2.
 
-Before you get started you will need to install [git](http://gitscm.org) and [Play 2](http://playframework.org).
+Before you get started you will need to install [git](http://git-scm.com/) and [Play 2](http://www.playframework.org/documentation/2.0.1/Installing).
 
 
 Test that the `play` command works by running:
@@ -25,6 +25,7 @@ You should see something like:
 
 
 Alright!  You are ready to go!
+
 
 
 Creating a Play App
@@ -58,6 +59,7 @@ If you see differences then fix them locally or pull them from the upstream repo
     git pull upstream java-new_project:master
 
 
+
 Setting up an IDE
 -----------------
 
@@ -86,6 +88,7 @@ Then commit the change:
     git commit -am "ignore IDE files"
 
 
+
 Starting the Play Server
 ------------------------
 
@@ -96,6 +99,7 @@ Now start the Play app by running:
 Open the following URL in your browser to verify the app is working:
 
 http://localhost:9000/
+
 
 
 Routes
@@ -124,6 +128,7 @@ Commit and verify your changes:
 
     git commit -am "added new route"
     git diff upstream java-foo_route
+
 
 
 Test a Route
@@ -172,6 +177,7 @@ Commit and verify your changes:
     git diff upstream java-test_route
 
 
+
 Update a Controller
 -------------------
 
@@ -192,6 +198,7 @@ Commit and verify that your changes:
 
     git commit -am "updated controller"
     git diff upstream java-hello_controller
+
 
 
 Test a Controller
@@ -250,6 +257,7 @@ Commit and verify that your changes:
     git diff upstream java-test_controller
 
 
+
 Update a View
 -------------
 
@@ -290,10 +298,11 @@ Commit and verify that your changes:
     git diff upstream java-hello_view
 
 
+
 Test a View
 -----------
 
-To test a template directly, create a new "test/IndexTest.java" file containing:
+To test a template directly, create a new `test/IndexTest.java` file containing:
 
     import org.junit.Test;
     import play.mvc.Content;
@@ -348,6 +357,7 @@ Verify that your changes:
     git diff upstream java-test_view
 
 
+
 Deploy your app on the Cloud with Heroku
 ----------------------------------------
 
@@ -399,7 +409,7 @@ Open the application, now running on the cloud, in your browser:
 Create a Model
 --------------
 
-Play 2 with Java uses EBean for RDBMS persistence.  To setup a data source edit the `conf/application.conf` file and uncomment these lines:
+Play 2 with Java uses [Ebean](http://www.avaje.org/) for RDBMS persistence.  To setup a data source edit the `conf/application.conf` file and uncomment these lines:
 
     db.default.driver=org.h2.Driver
     db.default.url="jdbc:h2:mem:play"
@@ -462,7 +472,7 @@ Run the tests and make sure all four pass:
     play test
 
 
-EBean will automatically create a new database evolution script for you in a file named `conf/evolutions/default/1.sql`.
+Ebean will automatically create a new database evolution script for you in a file named `conf/evolutions/default/1.sql`.
 
 
 Commit and verify your changes:
@@ -494,7 +504,7 @@ Now add a new method named `addTask`:
 
 Now add a new route to the `conf/routes` file that will handle `POST` requests to `/tasks` and handle the request with the `Application.addTask()` method:
 
-    POST    /tasks                      controllers.Application.addTask()
+    POST    /task                       controllers.Application.addTask()
 
 
 Now create a form in the `app/views/index.scala.html` template for adding new `Tasks`.  Replace the `@play20.welcome` line with:
@@ -596,7 +606,7 @@ Commit and verify your changes:
 Make the App Pretty with Twitter Bootstrap
 ------------------------------------------
 
-Twitter Bootstrap is a CSS library that makes it easy to make a web app look better.  To use Twitter Bootstrap start by adding the WebJar dependency and repository resolver to the `project/Build.scala` file:
+[Twitter Bootstrap](http://twitter.github.com/bootstrap) is a CSS library that makes it easy to make a web app look better.  To use Twitter Bootstrap start by adding the [WebJar](http://webjar.github.com) dependency and repository resolver to the `project/Build.scala` file:
 
         val appDependencies = Seq(
           "com.github.twitter" % "bootstrap" % "2.0.2"
@@ -612,7 +622,32 @@ Now restart the Play server so that it will fetch the new dependency.  To use Bo
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
 
 
-Update the body of the `app/views/index.scala.html` file to use Bootstrap for a nice header, better layout, and nicer default fonts:
+Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
+
+    body {
+        margin-top: 50px;
+    }
+
+
+Create a new template component that will be used to create new Bootstrap-friendly form fields by creating a new file named `app/views/twitterBootstrapInput.scala.html` containing:
+
+    @(elements: helper.FieldElements)
+
+    <div class="control-group @if(elements.hasErrors) {error}">
+        <label for="@elements.id" class="control-label">@elements.label</label>
+        <div class="controls">
+            @elements.input
+            <span class="help-inline">@elements.errors.mkString(", ")</span>
+        </div>
+    </div>
+
+
+Update the `app/views/index.scala.html` file to use Bootstrap for a nice header, better layout, and nicer default fonts:
+
+    @(message: String, taskForm: Form[Task])
+    @implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+
+    @main("Welcome to Play 2.0") {
 
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
@@ -621,22 +656,40 @@ Update the body of the `app/views/index.scala.html` file to use Bootstrap for a 
                 </div>
             </div>
         </div>
-    
+
         <div class="container">
             <ul id="tasks"></ul>
-       
-            @helper.form(action = routes.Application.addTask()) {
-                <input name="contents"/>
-                <input type="submit"/>
+
+            @helper.form(action = routes.Application.addTask(), 'class -> "well form-horizontal") {
+                @helper.inputText(taskForm("contents"), '_label -> "Contents")
+                <div class="controls">
+                    <input type="submit" class="btn btn-primary"/>
+                </div>
             }
         </div>
 
-
-Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
-
-    body {
-        margin-top: 50px;
     }
+
+
+The template now takes a second parameter that is a `Form[Task]` and must be passed to the template.  This will be used for helping with form validation.  Update the `index()` method in the `app/controllers/Application.java` file to pass the new required parameter:
+
+      public static Result index() {
+        return ok(index.render("hello, world", form(Task.class)));
+      }
+
+
+Update the `test/IndexTest.java` file to pass the form to the template.  First add the import:
+
+    import models.Task;
+
+Update the first line of the `indexTemplate` test method:
+
+          Content html = views.html.index.render("test", new Form(Task.class));
+
+
+Run the tests to make sure they still pass:
+
+    play test
 
 
 Load the app in your browser and verify it still works:
@@ -646,6 +699,7 @@ http://localhost:9000
 
 Commit and verify your changes:
 
+    git add app/views/twitterBootstrapInput.scala.html
     git commit -am "Add Bootstrap"
     git diff upstream java-bootstrap
 
@@ -654,12 +708,39 @@ Commit and verify your changes:
 Add Form Validation
 -------------------
 
+Add a simple `Required` constraint to the `app/models/Task.java` class.  First, add the import:
+
+    import play.data.validation.Constraints;
+
+Add the `@Constraints.Required` annotation to the `contents` field:
+
+        @Constraints.Required
+        public String contents;
+
+
+Update the `addTask` method on the `app/controllers/Application.java` controller to check for form errors and if it sees any then render the form instead of trying to save the Task:
+
+      public static Result addTask() {
+        Form<Task> form = form(Task.class).bindFromRequest();
+        if (form.hasErrors()) {
+          return badRequest(index.render("hello, world", form));
+        }
+        else {
+          Task task = form.get();
+          task.save();
+          return redirect(routes.Application.index());
+        }
+      }
+
+
+Load the app in your browser verify that adding an empty Task displays an error:
+
+http://localhost:9000
 
 
 Commit and verify your changes:
 
-    git add 
-    git commit -am ""
+    git commit -am "Add validation"
     git diff upstream java-validation
 
 
@@ -667,11 +748,39 @@ Commit and verify your changes:
 Update the App on Heroku
 ------------------------
 
+Heroku provides each application with a small, free PostgreSQL database.  To switch the application to use that database only when it's running on Heroku, two small changes need to be made.
+
+First, add the PostgreSQL database driver as a dependency of the application by `project/Build.scala` file with the following:
+
+        val appDependencies = Seq(
+          "com.github.twitter" % "bootstrap" % "2.0.2",
+          "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+        )
+
+
+Then update the `Procfile` to override the default database settings when Heroku runs the app:
+
+    web: target/start -Dhttp.port=${PORT} -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=$DATABASE_URL ${JAVA_OPTS}
+
 
 Commit and verify your changes:
 
-    git add 
-    git commit -am ""
+    git commit -am "Updates for PostgreSQL on Heroku"
     git diff upstream java-heroku_update
 
 
+Push your updates to Heroku:
+
+    git push heroku master
+
+
+View your app on the cloud:
+
+    heroku open
+
+
+
+Congratulations!
+----------------
+
+You've built a Play 2 app and deployed it on the cloud.  You've learned how to get started with Play 2, Ebean, CoffeeScript, Twitter Bootstrap, jQuery, RESTful JSON services, and Heroku.  Have fun as you continue to learn Play 2!
