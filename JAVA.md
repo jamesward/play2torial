@@ -151,8 +151,8 @@ Now that you have a new route for `/foo` lets create a test for that route.  Now
     
       @Test
       public void testFooRoute() {
-        Result result = routeAndCall(fakeRequest(GET, "/foo"));
-        assertThat(result).isNotNull();
+          Result result = routeAndCall(fakeRequest(GET, "/foo"));
+          assertThat(result).isNotNull();
       }
     
     }
@@ -221,11 +221,11 @@ You can do functional tests against a controller by simply creating a new JUnit 
     
       @Test
       public void callIndex() {
-        Result result = callAction(controllers.routes.ref.Application.index());
-        assertThat(status(result)).isEqualTo(OK);
-        assertThat(contentType(result)).isEqualTo("text/html");
-        assertThat(charset(result)).isEqualTo("utf-8");
-        assertThat(contentAsString(result)).contains("hello, world");
+          Result result = callAction(controllers.routes.ref.Application.index());
+          assertThat(status(result)).isEqualTo(OK);
+          assertThat(contentType(result)).isEqualTo("text/html");
+          assertThat(charset(result)).isEqualTo("utf-8");
+          assertThat(contentAsString(result)).contains("hello, world");
       }
     
     }
@@ -320,9 +320,9 @@ To test a template directly, create a new `test/IndexTest.java` file containing:
     
       @Test
       public void indexTemplate() {
-        Content html = views.html.index.render("test");
-        assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("TEST");
+          Content html = views.html.index.render("test");
+          assertThat(contentType(html)).isEqualTo("text/html");
+          assertThat(contentAsString(html)).contains("TEST");
       }
     
     }
@@ -501,26 +501,26 @@ Start by adding a new method to the `app/controllers/Application.java` file that
 Now add a new method named `addTask`:
 
       public static Result addTask() {
-        Form<Task> form = form(Task.class).bindFromRequest();
-        Task task = form.get();
-        task.save();
-        return redirect(routes.Application.index());
+          Form<Task> form = form(Task.class).bindFromRequest();
+          Task task = form.get();
+          task.save();
+          return redirect(routes.Application.index());
       }
 
 
-Now add a new route to the `conf/routes` file that will handle `POST` requests to `/tasks` and handle the request with the `Application.addTask()` method:
+Now add a new route to the `conf/routes` file that will handle `POST` requests to `/task` and handle the request with the `Application.addTask()` method:
 
     POST    /task                       controllers.Application.addTask()
 
 
 Now create a form in the `app/views/index.scala.html` template for adding new `Tasks`.  Replace the `@play20.welcome` line with:
 
-      @message.toUpperCase
+        @message.toUpperCase
       
-      @helper.form(action = routes.Application.addTask()) {
-        <input name="contents"/>
-        <input type="submit"/>
-      }
+        @helper.form(action = routes.Application.addTask()) {
+            <input name="contents"/>
+            <input type="submit"/>
+        }
 
 
 Test out the new UI by loading the app in your browser:  
@@ -550,8 +550,8 @@ Create a new `getTasks` controller method in the `app/controllers/Application.ja
 Then add the new `getTasks` method:
 
       public static Result getTasks() {
-        List<Task> tasks = new Model.Finder(String.class, Task.class).all();
-        return ok(toJson(tasks));
+          List<Task> tasks = new Model.Finder(String.class, Task.class).all();
+          return ok(toJson(tasks));
       }
 
 
@@ -597,7 +597,7 @@ Update the `app/views/main.scala.html` file to include the compiled and minified
     <script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
 
 
-Check out the app in your browser:  
+Check out the app in your browser and verify that the list of tasks is displayed:  
 [http://localhost:9000/](http://localhost:9000/)
 
 
@@ -614,13 +614,13 @@ Make the App Pretty with Twitter Bootstrap
 
 [Twitter Bootstrap](http://twitter.github.com/bootstrap) is a CSS library that makes it easy to make a web app look better.  To use Twitter Bootstrap start by adding the [WebJar](http://webjar.github.com) dependency and repository resolver to the `project/Build.scala` file:
 
-        val appDependencies = Seq(
-          "com.github.twitter" % "bootstrap" % "2.0.2"
-        )
+          val appDependencies = Seq(
+            "com.github.twitter" % "bootstrap" % "2.0.2"
+          )
     
-        val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-          resolvers += "webjars" at "http://webjars.github.com/m2"
-        )
+          val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+            resolvers += "webjars" at "http://webjars.github.com/m2"
+          )
 
 
 Now restart the Play server so that it will fetch the new dependency.  To use Bootstrap simply include the following line in the `app/views/main.scala.html` file, making sure it is between the `<title>` and the `main.css` lines:
@@ -680,12 +680,13 @@ Update the `app/views/index.scala.html` file to use Bootstrap for a nice header,
 The template now takes a second parameter that is a `Form[Task]` and must be passed to the template.  This will be used for helping with form validation.  Update the `index()` method in the `app/controllers/Application.java` file to pass the new required parameter:
 
       public static Result index() {
-        return ok(index.render("hello, world", form(Task.class)));
+          return ok(index.render("hello, world", form(Task.class)));
       }
 
 
 Update the `test/IndexTest.java` file to pass the form to the template.  First add the import:
 
+    import play.data.Form;
     import models.Task;
 
 Update the first line of the `indexTemplate` test method:
@@ -726,15 +727,15 @@ Add the `@Constraints.Required` annotation to the `contents` field:
 Update the `addTask` method on the `app/controllers/Application.java` controller to check for form errors and if it sees any then render the form instead of trying to save the Task:
 
       public static Result addTask() {
-        Form<Task> form = form(Task.class).bindFromRequest();
-        if (form.hasErrors()) {
-          return badRequest(index.render("hello, world", form));
-        }
-        else {
-          Task task = form.get();
-          task.save();
-          return redirect(routes.Application.index());
-        }
+          Form<Task> form = form(Task.class).bindFromRequest();
+          if (form.hasErrors()) {
+              return badRequest(index.render("hello, world", form));
+          }
+          else {
+              Task task = form.get();
+              task.save();
+              return redirect(routes.Application.index());
+          }
       }
 
 
@@ -756,10 +757,10 @@ Heroku provides each application with a small, free PostgreSQL database.  To swi
 
 First, add the PostgreSQL database driver as a dependency of the application by `project/Build.scala` file with the following:
 
-        val appDependencies = Seq(
-          "com.github.twitter" % "bootstrap" % "2.0.2",
-          "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
-        )
+          val appDependencies = Seq(
+            "com.github.twitter" % "bootstrap" % "2.0.2",
+            "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+          )
 
 
 Then update the `Procfile` to override the default database settings when Heroku runs the app:
