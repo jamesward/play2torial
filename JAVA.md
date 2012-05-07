@@ -19,7 +19,7 @@ You should see something like:
     |  __/|_|\____|\__ (_)
     |_|            |__/ 
              
-    play! 2.0, http://www.playframework.org
+    play! 2.0.1, http://www.playframework.org
     
     Welcome to Play 2.0!
 
@@ -33,30 +33,37 @@ Creating a Play App
 
 Create a new Play 2 application named "play2torial" by running:
 
-    play create play2torial
+    play new play2torial
 
 When prompted select option 2 to create a Java application.
+
 
 In the newly created `play2torial` directory create a new git repository by running:
 
     git init
+
 
 Add the files to the git repo and commit them:
 
     git add .
     git commit -m init
 
+
 Throughout this tutorial you will be able to check your progress against the official tutorial.  To do this add the official tutorial as a new git remote named `upstream` by running:
 
     git remote add upstream git@github.com:jamesward/play2torial.git
 
+
+Fetch the remote repository:
+
+    git fetch upstream
+
+
 Now validate that your local project is correct by running:
 
-    git diff upstream java-new_project
+    git diff upstream/java-new_project
 
-If you see differences then fix them locally or pull them from the upstream repo into your local repo:
-
-    git pull upstream java-new_project:master
+Note: The `application.secret` config value will be different and that is fine.  Also sometimes git will tell you something is different even though it looks the same.  This will likely be due to differences in indentation and newlines.  You can ignore these differences.
 
 
 
@@ -97,8 +104,7 @@ Now start the Play app by running:
     play ~run
 
 Open the following URL in your browser to verify the app is working:
-
-http://localhost:9000/
+[http://localhost:9000/](http://localhost:9000/)
 
 
 
@@ -112,14 +118,13 @@ Play routes HTTP requests to a controller using the routes defined in the `conf/
 
 That means that when a HTTP GET request for the URL `/` comes in, it will be routed to the method named `index` on the `controllers.Application` class.
 
-Add a new route to handle GET requests to `/foo` with a call to `controllers.Application.index()` by adding the following line to the routes file:
+Add a new route to handle GET requests to `/foo` with a call to `controllers.Application.index()` by adding the following line to the `conf/routes` file:
 
     GET     /foo                        controllers.Application.index()
 
 
 Now try to open the following URL in your browser:
-
-http://localhost:9000/foo
+[http://localhost:9000/foo](http://localhost:9000/foo)
 
 
 You should see the same welcome message as your did when you made the request to the `/` URL.
@@ -127,7 +132,7 @@ You should see the same welcome message as your did when you made the request to
 Commit and verify your changes:
 
     git commit -am "added new route"
-    git diff upstream java-foo_route
+    git diff upstream/java-foo_route
 
 
 
@@ -174,7 +179,7 @@ Commit and verify your changes:
 
     git add test
     git commit -m "added test for foo route"
-    git diff upstream java-test_route
+    git diff upstream/java-test_route
 
 
 
@@ -188,8 +193,7 @@ The `index()` method body looks like:
     return ok(index.render("Your new application is ready."));
 
 Edit the `Application.java` file and change the `Your new application is ready.` string to `hello, world`.  Save the file and then reload the following URL in your browser:
-
-http://localhost:9000
+[http://localhost:9000/](http://localhost:9000/)
 
 
 Notice that the header at the top of the page now reads `hello, world`.  Play recompiled the Java controller behind the scenes.  If you had made a change that could not be compiled you would see the compile error in your browser and in your console.
@@ -197,7 +201,7 @@ Notice that the header at the top of the page now reads `hello, world`.  Play re
 Commit and verify that your changes:
 
     git commit -am "updated controller"
-    git diff upstream java-hello_controller
+    git diff upstream/java-hello_controller
 
 
 
@@ -254,7 +258,7 @@ Commit and verify that your changes:
 
     git add ` 
     git commit -am "added Application controller test"
-    git diff upstream java-test_controller
+    git diff upstream/java-test_controller
 
 
 
@@ -281,21 +285,23 @@ Change the Play welcome message to uppercase:
     @play20.welcome(message.toUpperCase, style = "Java")
 
 View your changes in the browser:
+[http://localhost:9000/](http://localhost:9000/)
 
-http://localhost:9000
 
 Because the `test/ApplicationTest.java` test uses this updated template, update the test to account for the upper cased string:
 
     assertThat(contentAsString(result)).contains("HELLO, WORLD");
 
+
 Run the tests:
 
     play test
 
+
 Commit and verify that your changes:
 
     git commit -am "change the view"
-    git diff upstream java-hello_view
+    git diff upstream/java-hello_view
 
 
 
@@ -354,7 +360,7 @@ Verify that your changes:
 
     git add test/IndexTest.java
     git commit -m "add index view test"
-    git diff upstream java-test_view
+    git diff upstream/java-test_view
 
 
 
@@ -479,7 +485,7 @@ Commit and verify your changes:
 
     git add conf/evolutions app/models/Task.java test/TaskTest.java
     git commit -am "added Task model, in-memory database config, and test"
-    git diff upstream java-task_model
+    git diff upstream/java-task_model
 
 
 
@@ -517,9 +523,10 @@ Now create a form in the `app/views/index.scala.html` template for adding new `T
       }
 
 
-Test out the new UI by loading the app in your browser.  You will be prompted to run the database evolutions.  Just click the `Apply this script now!` button.
+Test out the new UI by loading the app in your browser:
+[http://localhost:9000/](http://localhost:9000/)
 
-http://localhost:9000/
+You will be prompted to run the database evolutions.  Just click the `Apply this script now!` button.
 
 
 Add a new `Task` and the browser should refresh the index page.
@@ -527,7 +534,7 @@ Add a new `Task` and the browser should refresh the index page.
 Commit and verify your changes:
 
     git commit -am "add new UI to create Tasks"
-    git diff upstream java-task_add
+    git diff upstream/java-task_add
 
 
 
@@ -554,8 +561,8 @@ Add a new route to the `conf/routes` file to get the tasks as JSON serialized da
 
 
 After adding a new `Task` load the following URL in your browser:
+[http://localhost:9000/tasks](http://localhost:9000/tasks)
 
-http://localhost:9000/tasks
 
 Verify that you see a Task (or Tasks) in JSON form.
 
@@ -563,7 +570,7 @@ Verify that you see a Task (or Tasks) in JSON form.
 Commit and verify your changes:
 
     git commit -am "get the tasks as JSON"
-    git diff upstream java-task_json
+    git diff upstream/java-task_json
 
 
 
@@ -591,15 +598,14 @@ Update the `app/views/main.scala.html` file to include the compiled and minified
 
 
 Check out the app in your browser:
-
-http://localhost:9000
+[http://localhost:9000/](http://localhost:9000/)
 
 
 Commit and verify your changes:
 
     git add app/views/index.scala.html app/assets/javascripts/index.coffee app/views/main.scala.html
     git commit -am "Display the list of tasks using jQuery and CoffeeScript"
-    git diff upstream java-task_coffeescript
+    git diff upstream/java-task_coffeescript
 
 
 
@@ -693,15 +699,14 @@ Run the tests to make sure they still pass:
 
 
 Load the app in your browser and verify it still works:
-
-http://localhost:9000
+[http://localhost:9000/](http://localhost:9000/)
 
 
 Commit and verify your changes:
 
     git add app/views/twitterBootstrapInput.scala.html
     git commit -am "Add Bootstrap"
-    git diff upstream java-bootstrap
+    git diff upstream/java-bootstrap
 
 
 
@@ -734,14 +739,13 @@ Update the `addTask` method on the `app/controllers/Application.java` controller
 
 
 Load the app in your browser verify that adding an empty Task displays an error:
-
-http://localhost:9000
+[http://localhost:9000/](http://localhost:9000/)
 
 
 Commit and verify your changes:
 
     git commit -am "Add validation"
-    git diff upstream java-validation
+    git diff upstream/java-validation
 
 
 
@@ -766,7 +770,7 @@ Then update the `Procfile` to override the default database settings when Heroku
 Commit and verify your changes:
 
     git commit -am "Updates for PostgreSQL on Heroku"
-    git diff upstream java-heroku_update
+    git diff upstream/java-heroku_update
 
 
 Push your updates to Heroku:
