@@ -104,6 +104,7 @@ Now start the Play app by running:
     play ~run
 
 Open the following URL in your browser to verify the app is working:
+
 [http://localhost:9000/](http://localhost:9000/)
 
 
