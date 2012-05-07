@@ -149,11 +149,11 @@ Now that you have a new route for `/foo` lets create a test for that route.  Now
     
     public class FooTest {
     
-      @Test
-      public void testFooRoute() {
-          Result result = routeAndCall(fakeRequest(GET, "/foo"));
-          assertThat(result).isNotNull();
-      }
+        @Test
+        public void testFooRoute() {
+            Result result = routeAndCall(fakeRequest(GET, "/foo"));
+            assertThat(result).isNotNull();
+        }
     
     }
 
@@ -219,14 +219,14 @@ You can do functional tests against a controller by simply creating a new JUnit 
     
     public class ApplicationTest {
     
-      @Test
-      public void callIndex() {
-          Result result = callAction(controllers.routes.ref.Application.index());
-          assertThat(status(result)).isEqualTo(OK);
-          assertThat(contentType(result)).isEqualTo("text/html");
-          assertThat(charset(result)).isEqualTo("utf-8");
-          assertThat(contentAsString(result)).contains("hello, world");
-      }
+        @Test
+        public void callIndex() {
+            Result result = callAction(controllers.routes.ref.Application.index());
+            assertThat(status(result)).isEqualTo(OK);
+            assertThat(contentType(result)).isEqualTo("text/html");
+            assertThat(charset(result)).isEqualTo("utf-8");
+            assertThat(contentAsString(result)).contains("hello, world");
+        }
     
     }
 
@@ -318,12 +318,12 @@ To test a template directly, create a new `test/IndexTest.java` file containing:
     
     public class IndexTest {
     
-      @Test
-      public void indexTemplate() {
-          Content html = views.html.index.render("test");
-          assertThat(contentType(html)).isEqualTo("text/html");
-          assertThat(contentAsString(html)).contains("TEST");
-      }
+        @Test
+        public void indexTemplate() {
+            Content html = views.html.index.render("test");
+            assertThat(contentType(html)).isEqualTo("text/html");
+            assertThat(contentAsString(html)).contains("TEST");
+        }
     
     }
 
@@ -500,12 +500,12 @@ Start by adding a new method to the `app/controllers/Application.java` file that
 
 Now add a new method named `addTask`:
 
-      public static Result addTask() {
-          Form<Task> form = form(Task.class).bindFromRequest();
-          Task task = form.get();
-          task.save();
-          return redirect(routes.Application.index());
-      }
+        public static Result addTask() {
+            Form<Task> form = form(Task.class).bindFromRequest();
+            Task task = form.get();
+            task.save();
+            return redirect(routes.Application.index());
+        }
 
 
 Now add a new route to the `conf/routes` file that will handle `POST` requests to `/task` and handle the request with the `Application.addTask()` method:
@@ -549,10 +549,10 @@ Create a new `getTasks` controller method in the `app/controllers/Application.ja
 
 Then add the new `getTasks` method:
 
-      public static Result getTasks() {
-          List<Task> tasks = new Model.Finder(String.class, Task.class).all();
-          return ok(toJson(tasks));
-      }
+        public static Result getTasks() {
+            List<Task> tasks = new Model.Finder(String.class, Task.class).all();
+            return ok(toJson(tasks));
+        }
 
 
 Add a new route to the `conf/routes` file to get the tasks as JSON serialized data:
@@ -638,7 +638,7 @@ Add the following to the `public/stylesheets/main.css` file in order to move the
 Create a new template component that will be used to create new Bootstrap-friendly form fields by creating a new file named `app/views/twitterBootstrapInput.scala.html` containing:
 
     @(elements: helper.FieldElements)
-
+    
     <div class="control-group @if(elements.hasErrors) {error}">
         <label for="@elements.id" class="control-label">@elements.label</label>
         <div class="controls">
@@ -652,9 +652,9 @@ Update the `app/views/index.scala.html` file to use Bootstrap for a nice header,
 
     @(message: String, taskForm: Form[Task])
     @implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
-
+    
     @main("Welcome to Play 2.0") {
-
+    
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
@@ -673,7 +673,7 @@ Update the `app/views/index.scala.html` file to use Bootstrap for a nice header,
                 </div>
             }
         </div>
-
+    
     }
 
 
@@ -726,17 +726,17 @@ Add the `@Constraints.Required` annotation to the `contents` field:
 
 Update the `addTask` method on the `app/controllers/Application.java` controller to check for form errors and if it sees any then render the form instead of trying to save the Task:
 
-      public static Result addTask() {
-          Form<Task> form = form(Task.class).bindFromRequest();
-          if (form.hasErrors()) {
-              return badRequest(index.render("hello, world", form));
-          }
-          else {
-              Task task = form.get();
-              task.save();
-              return redirect(routes.Application.index());
-          }
-      }
+        public static Result addTask() {
+            Form<Task> form = form(Task.class).bindFromRequest();
+            if (form.hasErrors()) {
+                return badRequest(index.render("hello, world", form));
+            }
+            else {
+                Task task = form.get();
+                task.save();
+                return redirect(routes.Application.index());
+            }
+        }
 
 
 Load the app in your browser verify that adding an empty Task displays an error:  
