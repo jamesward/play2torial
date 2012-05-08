@@ -51,7 +51,7 @@ Add the files to the git repo and commit them:
 
 Throughout this tutorial you will be able to check your progress against the official tutorial.  To do this add the official tutorial as a new git remote named `upstream` by running:
 
-    git remote add upstream git@github.com:jamesward/play2torial.git
+    git remote add upstream git://github.com/jamesward/play2torial.git
 
 
 Fetch the remote repository:
