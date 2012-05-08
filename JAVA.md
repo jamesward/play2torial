@@ -28,8 +28,8 @@ Alright!  You are ready to go!
 
 
 
-Creating a Play App
--------------------
+Create a Play App
+-----------------
 
 Create a new Play 2 application named "play2torial" by running:
 
@@ -67,8 +67,8 @@ Note: The `application.secret` config value will be different and that is fine. 
 
 
 
-Setting up an IDE
------------------
+Set up an IDE
+-------------
 
 Before we take a tour of the app you can optionally generate project files for IntelliJ or Eclipse.
 
@@ -96,8 +96,8 @@ Then commit the change:
 
 
 
-Starting the Play Server
-------------------------
+Start the Play Server
+---------------------
 
 Now start the Play app by running:
 
