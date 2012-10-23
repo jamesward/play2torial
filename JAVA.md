@@ -82,6 +82,8 @@ For Eclipse run:
 
     play eclipsify
 
+_Read more about [IDE:s](http://www.playframework.org/documentation/2.0/IDE)_
+
 If you do a `git status` then you will see some uncommitted files.  Those shouldn't go into the git repo so add the following lines to the `.gitignore` file:
 
     /.idea
@@ -106,7 +108,7 @@ Now start the Play app by running:
 Open the following URL in your browser to verify the app is working:  
 [http://localhost:9000/](http://localhost:9000/)
 
-
+_Read more about the [Play Console](http://www.playframework.org/documentation/2.0/PlayConsole)_
 
 Routes
 ------
@@ -126,8 +128,9 @@ Add a new route to handle GET requests to `/foo` with a call to `controllers.App
 Now try to open the following URL in your browser:  
 [http://localhost:9000/foo](http://localhost:9000/foo)
 
-
 You should see the same welcome message as your did when you made the request to the `/` URL.
+
+_Read more about [Routing](http://www.playframework.org/documentation/2.0/JavaRouting)_
 
 Commit and verify your changes:
 
@@ -174,6 +177,7 @@ You should see something like:
     [info] 1 tests, 0 failures, 0 errors
     [info] Passed: : Total 1, Failed 0, Errors 0, Passed 1, Skipped 0
 
+_Read more about [Testing Routes](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
 
 Commit and verify your changes:
 
@@ -253,6 +257,7 @@ You should see something like:
     [info] 1 tests, 0 failures, 0 errors
     [info] Passed: : Total 2, Failed 0, Errors 0, Passed 2, Skipped 0
 
+_Read more about [Testing Controllers](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
 
 Commit and verify that your changes:
 
@@ -297,6 +302,7 @@ Run the tests:
 
     play test
 
+_Read more about [Templating](http://www.playframework.org/documentation/2.0/JavaTemplates) and [Template Use Cases](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
 
 Commit and verify that your changes:
 
@@ -355,6 +361,8 @@ You should see something like:
     [info] Finished in 0.004 seconds
     [info] 1 tests, 0 failures, 0 errors
     [info] Passed: : Total 3, Failed 0, Errors 0, Passed 3, Skipped 0
+
+_Read more about [Testing Templates](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
 
 Verify that your changes:
 
@@ -480,6 +488,7 @@ Run the tests and make sure all four pass:
 
 Ebean will automatically create a new database evolution script for you in a file named `conf/evolutions/default/1.sql`.
 
+_Read more about [EBean ORM Models](http://www.playframework.org/documentation/2.0/JavaEbean) [Fake Application](http://www.playframework.org/documentation/2.0/JavaTest)_
 
 Commit and verify your changes:
 
@@ -530,6 +539,8 @@ You will be prompted to run the database evolutions.  Just click the `Apply this
 
 
 Add a new `Task` and the browser should refresh the index page.
+
+_Read more about [Forms](http://www.playframework.org/documentation/2.0/JavaForms) and [Templates](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
 
 Commit and verify your changes:
 
@@ -600,6 +611,9 @@ Update the `app/views/main.scala.html` file to include the compiled and minified
 Check out the app in your browser and verify that the list of tasks is displayed:  
 [http://localhost:9000/](http://localhost:9000/)
 
+To see the non-minified version of the compiled javascript you can go to [http://localhost:9000/assets/javascripts/index.js](http://localhost:9000/assets/javascripts/index.js)
+
+_Read more about [Assets](http://www.playframework.org/documentation/2.0/Assets) and [CoffeeScript](http://www.playframework.org/documentation/2.0/AssetsCoffeeScript)_
 
 Commit and verify your changes:
 
@@ -702,6 +716,7 @@ Run the tests to make sure they still pass:
 Load the app in your browser and verify it still works:  
 [http://localhost:9000/](http://localhost:9000/)
 
+_Read more about [Templates](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
 
 Commit and verify your changes:
 
@@ -742,6 +757,7 @@ Update the `addTask` method on the `app/controllers/Application.java` controller
 Load the app in your browser verify that adding an empty Task displays an error:  
 [http://localhost:9000/](http://localhost:9000/)
 
+_Read more about [Validation](http://www.playframework.org/documentation/2.0/JavaForms)_
 
 Commit and verify your changes:
 
