@@ -665,7 +665,7 @@ Create a new template component that will be used to create new Bootstrap-friend
 Update the `app/views/index.scala.html` file to use Bootstrap for a nice header, better layout, and nicer default fonts:
 
     @(message: String, taskForm: Form[Task])
-    @implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+    @implicitFieldConstructor = { helper.FieldConstructor(twitterBootstrapInput.render) }
     
     @main("Welcome to Play 2.0") {
     
