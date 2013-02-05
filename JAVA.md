@@ -629,7 +629,8 @@ Make the App Pretty with Twitter Bootstrap
 [Twitter Bootstrap](http://twitter.github.com/bootstrap) is a CSS library that makes it easy to make a web app look better.  To use Twitter Bootstrap start by adding the [WebJar](http://webjar.github.com) dependency and repository resolver to the `project/Build.scala` file:
 
           val appDependencies = Seq(
-            "com.github.twitter" % "bootstrap" % "2.0.2"
+            "org.webjars" % "webjars-play" % "2.0",
+            "org.webjars" % "bootstrap" % "2.1.1"
           )
     
           val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
@@ -639,13 +640,13 @@ Make the App Pretty with Twitter Bootstrap
 
 Now restart the Play server so that it will fetch the new dependency.  To use Bootstrap simply include the following line in the `app/views/main.scala.html` file, making sure it is between the `<title>` and the `main.css` lines:
 
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
 
 
 Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
 
     body {
-        margin-top: 50px;
+        padding-top: 50px;
     }
 
 
