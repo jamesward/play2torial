@@ -642,6 +642,9 @@ Now restart the Play server so that it will fetch the new dependency.  To use Bo
 
     <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
 
+Add the following mapping to the routes file
+GET     /webjars/*file              controllers.WebJarAssets.at(file)
+
 
 Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
 
