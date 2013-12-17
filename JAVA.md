@@ -44,10 +44,10 @@ In the newly created `play2torial` directory create a new git repository by runn
 
 
 Add the files to the git repo and commit them:
-
-    git add .
-    git commit -m init
-
+```sh
+git add .
+git commit -m init
+```
 
 Throughout this tutorial you will be able to check your progress against the official tutorial.  To do this add the official tutorial as a new git remote named `upstream` by running:
 
@@ -133,33 +133,33 @@ You should see the same welcome message as your did when you made the request to
 _Read more about [Routing](http://www.playframework.org/documentation/2.0/JavaRouting)_
 
 Commit and verify your changes:
-
-    git commit -am "added new route"
-    git diff upstream/java-foo_route
-
+```sh
+git commit -am "added new route"
+git diff upstream/java-foo_route
+```
 
 
 Test a Route
 ------------
 
 Now that you have a new route for `/foo` lets create a test for that route.  Now create a new file `test/FooTest.java` file containing:
-
-    import org.junit.Test;
-    import play.mvc.Result;
+```java
+import org.junit.Test;
+import play.mvc.Result;
     
-    import static play.test.Helpers.*;
-    import static org.fest.assertions.Assertions.*;
+import static play.test.Helpers.*;
+import static org.fest.assertions.Assertions.*;
     
-    public class FooTest {
+public class FooTest {
     
-        @Test
-        public void testFooRoute() {
-            Result result = routeAndCall(fakeRequest(GET, "/foo"));
-            assertThat(result).isNotNull();
-        }
-    
+    @Test
+    public void testFooRoute() {
+        Result result = routeAndCall(fakeRequest(GET, "/foo"));
+        assertThat(result).isNotNull();
     }
-
+    
+}
+```
 
 That simple test will simulate a call to `/foo` and validate that the result was not null.  Run the test (you can keep the Play server running in another window):
 
@@ -180,11 +180,11 @@ You should see something like:
 _Read more about [Testing Routes](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
 
 Commit and verify your changes:
-
-    git add test
-    git commit -m "added test for foo route"
-    git diff upstream/java-test_route
-
+```sh
+git add test
+git commit -m "added test for foo route"
+git diff upstream/java-test_route
+```
 
 
 Update a Controller
@@ -193,9 +193,9 @@ Update a Controller
 The `app` directory is the main source for a Play app.  In that directory there is a directory named `controllers` containing a file named `Application.java` which is the `controllers.Application` class.
 
 The `index()` method body looks like:
-
-    return ok(index.render("Your new application is ready."));
-
+```java
+return ok(index.render("Your new application is ready."));
+```
 Edit the `Application.java` file and change the `Your new application is ready.` string to `hello, world`.  Save the file and then reload the following URL in your browser:  
 [http://localhost:9000/](http://localhost:9000/)
 
@@ -213,27 +213,27 @@ Test a Controller
 -----------------
 
 You can do functional tests against a controller by simply creating a new JUnit Test.  Create a new file named `test/ApplicationTest.java` file containing:
-
-    import org.junit.Test;
-    import play.mvc.Result;
+```java
+import org.junit.Test;
+import play.mvc.Result;
     
-    import static org.fest.assertions.Assertions.assertThat;
-    import static play.mvc.Http.Status.OK;
-    import static play.test.Helpers.*;
+import static org.fest.assertions.Assertions.assertThat;
+import static play.mvc.Http.Status.OK;
+import static play.test.Helpers.*;
     
-    public class ApplicationTest {
+public class ApplicationTest {
     
-        @Test
-        public void callIndex() {
-            Result result = callAction(controllers.routes.ref.Application.index());
-            assertThat(status(result)).isEqualTo(OK);
-            assertThat(contentType(result)).isEqualTo("text/html");
-            assertThat(charset(result)).isEqualTo("utf-8");
-            assertThat(contentAsString(result)).contains("hello, world");
-        }
-    
+    @Test
+    public void callIndex() {
+        Result result = callAction(controllers.routes.ref.Application.index());
+        assertThat(status(result)).isEqualTo(OK);
+        assertThat(contentType(result)).isEqualTo("text/html");
+        assertThat(charset(result)).isEqualTo("utf-8");
+        assertThat(contentAsString(result)).contains("hello, world");
     }
-
+    
+}
+```
 This simulates a request to the `Application.index()` controller method and verifies that the response is what we expect.  Run the test:
 
     play test
@@ -260,11 +260,11 @@ You should see something like:
 _Read more about [Testing Controllers](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
 
 Commit and verify that your changes:
-
-    git add test/ApplicationTest.java
-    git commit -am "added Application controller test"
-    git diff upstream/java-test_controller
-
+```sh
+git add test/ApplicationTest.java
+git commit -am "added Application controller test"
+git diff upstream/java-test_controller
+```
 
 
 Update a View
@@ -294,9 +294,9 @@ View your changes in the browser:
 
 
 Because the `test/ApplicationTest.java` test uses this updated template, update the test to account for the upper cased string:
-
-    assertThat(contentAsString(result)).contains("HELLO, WORLD");
-
+```java
+assertThat(contentAsString(result)).contains("HELLO, WORLD");
+```
 
 Run the tests:
 
@@ -305,34 +305,34 @@ Run the tests:
 _Read more about [Templating](http://www.playframework.org/documentation/2.0/JavaTemplates) and [Template Use Cases](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
 
 Commit and verify that your changes:
-
-    git commit -am "change the view"
-    git diff upstream/java-hello_view
-
+```sh
+git commit -am "change the view"
+git diff upstream/java-hello_view
+```
 
 
 Test a View
 -----------
 
 To test a template directly, create a new `test/IndexTest.java` file containing:
-
-    import org.junit.Test;
-    import play.mvc.Content;
+```java
+import org.junit.Test;
+import play.mvc.Content;
     
-    import static org.fest.assertions.Assertions.assertThat;
-    import static play.test.Helpers.*;
+import static org.fest.assertions.Assertions.assertThat;
+import static play.test.Helpers.*;
     
-    public class IndexTest {
+public class IndexTest {
     
-        @Test
-        public void indexTemplate() {
-            Content html = views.html.index.render("test");
-            assertThat(contentType(html)).isEqualTo("text/html");
-            assertThat(contentAsString(html)).contains("TEST");
-        }
-    
+    @Test
+    public void indexTemplate() {
+        Content html = views.html.index.render("test");
+        assertThat(contentType(html)).isEqualTo("text/html");
+        assertThat(contentAsString(html)).contains("TEST");
     }
-
+    
+}
+```
 Run the tests:
 
     play test
@@ -365,11 +365,11 @@ You should see something like:
 _Read more about [Testing Templates](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
 
 Verify that your changes:
-
-    git add test/IndexTest.java
-    git commit -m "add index view test"
-    git diff upstream/java-test_view
-
+```sh
+git add test/IndexTest.java
+git commit -m "add index view test"
+git diff upstream/java-test_view
+```
 
 
 Deploy your app on the Cloud with Heroku
@@ -383,11 +383,11 @@ That tells Heroku how to start the Play application.
 
 
 Commit and verify your changes:
-
-    git add Procfile
-    git commit -m "add Procfile for Heroku"
-    git diff upstream/java-heroku_create
-
+```sh
+git add Procfile
+git commit -m "add Procfile for Heroku"
+git diff upstream/java-heroku_create
+```
 
 Now install the Heroku Toolbelt:  
 [http://toolbelt.heroku.com](http://toolbelt.heroku.com)
@@ -424,62 +424,62 @@ Create a Model
 --------------
 
 Play 2 with Java uses [Ebean](http://www.avaje.org/) for RDBMS persistence.  To setup a data source edit the `conf/application.conf` file and uncomment these lines:
-
-    db.default.driver=org.h2.Driver
-    db.default.url="jdbc:h2:mem:play"
+```properties
+db.default.driver=org.h2.Driver
+db.default.url="jdbc:h2:mem:play"
     
-    ebean.default="models.*"
-
+ebean.default="models.*"
+```
 
 This will use an in-memory database for a data source named "default".
 
 Create a new Java class to hold `Task` objects in a package named `models` by creating a new `app/models/Task.java` file containing:
-
-    package models;
+```java
+package models;
     
-    import play.db.ebean.Model;
+import play.db.ebean.Model;
     
-    import javax.persistence.Entity;
-    import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
     
-    @Entity
-    public class Task extends Model {
+@Entity
+public class Task extends Model {
     
-        @Id
-        public String id;
+    @Id
+    public String id;
     
-        public String contents;
+    public String contents;
     
-    }
-
+}
+```
 
 Create a test for your model by creating a new `test/TaskTest.java` file containing:
-
-    import org.junit.Test;
+```java
+import org.junit.Test;
     
-    import static play.test.Helpers.fakeApplication;
-    import static play.test.Helpers.running;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.running;
     
-    import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.Assertions.assertThat;
     
-    import models.Task;
+import models.Task;
     
-    public class TaskTest {
+public class TaskTest {
     
-        @Test
-        public void create() {
-            running(fakeApplication(), new Runnable() {
-                public void run() {
-                    Task task = new Task();
-                    task.contents = "Write a test";
-                    task.save();
-                    assertThat(task.id).isNotNull();
-                }
-            });
-        }
-    
+    @Test
+    public void create() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Task task = new Task();
+                task.contents = "Write a test";
+                task.save();
+                assertThat(task.id).isNotNull();
+            }
+        });
     }
-
+    
+}
+```
 
 Run the tests and make sure all four pass:
 
@@ -491,31 +491,31 @@ Ebean will automatically create a new database evolution script for you in a fil
 _Read more about [EBean ORM Models](http://www.playframework.org/documentation/2.0/JavaEbean) [Fake Application](http://www.playframework.org/documentation/2.0/JavaTest)_
 
 Commit and verify your changes:
-
-    git add conf/evolutions app/models/Task.java test/TaskTest.java
-    git commit -am "added Task model, in-memory database config, and test"
-    git diff upstream/java-task_model
-
+```sh
+git add conf/evolutions app/models/Task.java test/TaskTest.java
+git commit -am "added Task model, in-memory database config, and test"
+git diff upstream/java-task_model
+```
 
 
 Create UI for Adding Tasks
 --------------------------
 
 Start by adding a new method to the `app/controllers/Application.java` file that will map request parameters to a `Task` object, save it, and then redirect to the `index()` page.  First add these imports:
-
-    import models.Task;
-    import play.data.Form;
-
+```java
+import models.Task;
+import play.data.Form;
+```
 
 Now add a new method named `addTask`:
-
-        public static Result addTask() {
-            Form<Task> form = form(Task.class).bindFromRequest();
-            Task task = form.get();
-            task.save();
-            return redirect(routes.Application.index());
-        }
-
+```java
+public static Result addTask() {
+    Form<Task> form = form(Task.class).bindFromRequest();
+    Task task = form.get();
+    task.save();
+    return redirect(routes.Application.index());
+}
+```
 
 Now add a new route to the `conf/routes` file that will handle `POST` requests to `/task` and handle the request with the `Application.addTask()` method:
 
@@ -523,14 +523,14 @@ Now add a new route to the `conf/routes` file that will handle `POST` requests t
 
 
 Now create a form in the `app/views/index.scala.html` template for adding new `Tasks`.  Replace the `@play20.welcome` line with:
-
-        @message.toUpperCase
+```html
+@message.toUpperCase
       
-        @helper.form(action = routes.Application.addTask()) {
-            <input name="contents"/>
-            <input type="submit"/>
-        }
-
+@helper.form(action = routes.Application.addTask()) {
+    <input name="contents"/>
+    <input type="submit"/>
+}
+```
 
 Test out the new UI by loading the app in your browser:  
 [http://localhost:9000/](http://localhost:9000/)
@@ -543,28 +543,28 @@ Add a new `Task` and the browser should refresh the index page.
 _Read more about [Forms](http://www.playframework.org/documentation/2.0/JavaForms) and [Templates](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
 
 Commit and verify your changes:
-
-    git commit -am "add new UI to create Tasks"
-    git diff upstream/java-task_add
-
+```sh
+git commit -am "add new UI to create Tasks"
+git diff upstream/java-task_add
+```
 
 
 Get Tasks as JSON
 -----------------
 
 Create a new `getTasks` controller method in the `app/controllers/Application.java` file.  First add the imports:
-
-    import play.db.ebean.Model;
-    import java.util.List;
-    import static play.libs.Json.toJson;
-
+```java
+import play.db.ebean.Model;
+import java.util.List;
+import static play.libs.Json.toJson;
+```
 Then add the new `getTasks` method:
-
-        public static Result getTasks() {
-            List<Task> tasks = new Model.Finder(String.class, Task.class).all();
-            return ok(toJson(tasks));
-        }
-
+```java
+public static Result getTasks() {
+    List<Task> tasks = new Model.Finder(String.class, Task.class).all();
+    return ok(toJson(tasks));
+}
+```
 
 Add a new route to the `conf/routes` file to get the tasks as JSON serialized data:
 
@@ -579,10 +579,10 @@ Verify that you see a Task (or Tasks) in JSON form.
 
 
 Commit and verify your changes:
-
-    git commit -am "get the tasks as JSON"
-    git diff upstream/java-task_json
-
+```sh
+git commit -am "get the tasks as JSON"
+git diff upstream/java-task_json
+```
 
 
 Display the Tasks via CoffeeScript and jQuery
@@ -594,19 +594,19 @@ In the body of the `app/views/index.scala.html` file add a place to display the 
 
 
 Create a new file named `app/assets/javascripts/index.coffee` (and create the necessary directories) containing a simple CoffeeScript application that uses jQuery to load and display the tasks:
-
-    $ ->
-      $.get "/tasks", (data) ->
-        $.each data, (index, task) ->
-          $("#tasks").append $("<li>").text task.contents
-
+```coffee
+$ ->
+  $.get "/tasks", (data) ->
+    $.each data, (index, task) ->
+      $("#tasks").append $("<li>").text task.contents
+```
 This makes a `get` request to `/tasks` for the JSON serialized list of `Task` objects and then adds a new list item to the page element with the id of `tasks` for each `Task`.
 
 
 Update the `app/views/main.scala.html` file to include the compiled and minified version of the `index.coffee` JavaScript by adding the following after the line that includes jQuery:
-
-    <script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
-
+```html
+<script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
+```
 
 Check out the app in your browser and verify that the list of tasks is displayed:  
 [http://localhost:9000/](http://localhost:9000/)
@@ -616,101 +616,101 @@ To see the non-minified version of the compiled javascript you can go to [http:/
 _Read more about [Assets](http://www.playframework.org/documentation/2.0/Assets) and [CoffeeScript](http://www.playframework.org/documentation/2.0/AssetsCoffeeScript)_
 
 Commit and verify your changes:
-
-    git add app/views/index.scala.html app/assets/javascripts/index.coffee app/views/main.scala.html
-    git commit -am "Display the list of tasks using jQuery and CoffeeScript"
-    git diff upstream/java-task_coffeescript
-
+```sh
+git add app/views/index.scala.html app/assets/javascripts/index.coffee app/views/main.scala.html
+git commit -am "Display the list of tasks using jQuery and CoffeeScript"
+git diff upstream/java-task_coffeescript
+```
 
 
 Make the App Pretty with Twitter Bootstrap
 ------------------------------------------
 
 [Twitter Bootstrap](http://twitter.github.com/bootstrap) is a CSS library that makes it easy to make a web app look better.  To use Twitter Bootstrap start by adding the [WebJar](http://webjar.github.com) dependency and repository resolver to the `project/Build.scala` file:
-
-          val appDependencies = Seq(
-            "org.webjars" % "webjars-play" % "2.0",
-            "org.webjars" % "bootstrap" % "2.1.1"
-          )
+```scala
+val appDependencies = Seq(
+    "org.webjars" % "webjars-play" % "2.0",
+    "org.webjars" % "bootstrap" % "2.1.1"
+)
     
-          val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-            resolvers += "webjars" at "http://webjars.github.com/m2"
-          )
-
+val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+    resolvers += "webjars" at "http://webjars.github.com/m2"
+)
+```
 
 Now restart the Play server so that it will fetch the new dependency.  To use Bootstrap simply include the following line in the `app/views/main.scala.html` file, making sure it is between the `<title>` and the `main.css` lines:
-
-    <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
-
+```html
+<link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
+```
 Add the following mapping to the routes file
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
 
 
 Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
-
-    body {
-        padding-top: 50px;
-    }
-
+```css
+body {
+    padding-top: 50px;
+}
+```
 
 Create a new template component that will be used to create new Bootstrap-friendly form fields by creating a new file named `app/views/twitterBootstrapInput.scala.html` containing:
-
-    @(elements: helper.FieldElements)
+```html
+@(elements: helper.FieldElements)
     
-    <div class="control-group @if(elements.hasErrors) {error}">
-        <label for="@elements.id" class="control-label">@elements.label</label>
-        <div class="controls">
-            @elements.input
-            <span class="help-inline">@elements.errors.mkString(", ")</span>
+<div class="control-group @if(elements.hasErrors) {error}">
+    <label for="@elements.id" class="control-label">@elements.label</label>
+    <div class="controls">
+        @elements.input
+        <span class="help-inline">@elements.errors.mkString(", ")</span>
+    </div>
+</div>
+```
+
+Update the `app/views/index.scala.html` file to use Bootstrap for a nice header, better layout, and nicer default fonts:
+```html
+@(message: String, taskForm: Form[Task])
+@implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+    
+@main("Welcome to Play 2.0") {
+    
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a id="titleLink" class="brand" href="/">@message.toUpperCase</a>
+            </div>
         </div>
     </div>
 
+    <div class="container">
+        <ul id="tasks"></ul>
 
-Update the `app/views/index.scala.html` file to use Bootstrap for a nice header, better layout, and nicer default fonts:
-
-    @(message: String, taskForm: Form[Task])
-    @implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
-    
-    @main("Welcome to Play 2.0") {
-    
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a id="titleLink" class="brand" href="/">@message.toUpperCase</a>
-                </div>
+        @helper.form(action = routes.Application.addTask(), 'class -> "well form-horizontal") {
+            @helper.inputText(taskForm("contents"), '_label -> "Contents")
+            <div class="controls">
+                <input type="submit" class="btn btn-primary"/>
             </div>
-        </div>
-
-        <div class="container">
-            <ul id="tasks"></ul>
-
-            @helper.form(action = routes.Application.addTask(), 'class -> "well form-horizontal") {
-                @helper.inputText(taskForm("contents"), '_label -> "Contents")
-                <div class="controls">
-                    <input type="submit" class="btn btn-primary"/>
-                </div>
-            }
-        </div>
+        }
+    </div>
     
-    }
-
+}
+```
 
 The template now takes a second parameter that is a `Form[Task]` and must be passed to the template.  This will be used for helping with form validation.  Update the `index()` method in the `app/controllers/Application.java` file to pass the new required parameter:
-
-      public static Result index() {
-          return ok(index.render("hello, world", form(Task.class)));
-      }
-
+```java
+public static Result index() {
+    return ok(index.render("hello, world", form(Task.class)));
+}
+```
 
 Update the `test/IndexTest.java` file to pass the form to the template.  First add the import:
-
-    import play.data.Form;
-    import models.Task;
-
+```java
+import play.data.Form;
+import models.Task;
+```
 Update the first line of the `indexTemplate` test method:
-
-          Content html = views.html.index.render("test", new Form(Task.class));
-
+```java
+Content html = views.html.index.render("test", new Form(Task.class));
+```
 
 Run the tests to make sure they still pass:
 
@@ -723,40 +723,40 @@ Load the app in your browser and verify it still works:
 _Read more about [Templates](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
 
 Commit and verify your changes:
-
-    git add app/views/twitterBootstrapInput.scala.html
-    git commit -am "Add Bootstrap"
-    git diff upstream/java-bootstrap
-
+```bash
+git add app/views/twitterBootstrapInput.scala.html
+git commit -am "Add Bootstrap"
+git diff upstream/java-bootstrap
+```
 
 
 Add Form Validation
 -------------------
 
 Add a simple `Required` constraint to the `app/models/Task.java` class.  First, add the import:
-
-    import play.data.validation.Constraints;
-
+```java
+import play.data.validation.Constraints;
+```
 Add the `@Constraints.Required` annotation to the `contents` field:
-
-        @Constraints.Required
-        public String contents;
-
+```java
+@Constraints.Required
+public String contents;
+```
 
 Update the `addTask` method on the `app/controllers/Application.java` controller to check for form errors and if it sees any then render the form instead of trying to save the Task:
-
-        public static Result addTask() {
-            Form<Task> form = form(Task.class).bindFromRequest();
-            if (form.hasErrors()) {
-                return badRequest(index.render("hello, world", form));
-            }
-            else {
-                Task task = form.get();
-                task.save();
-                return redirect(routes.Application.index());
-            }
-        }
-
+```java
+public static Result addTask() {
+    Form<Task> form = form(Task.class).bindFromRequest();
+    if (form.hasErrors()) {
+        return badRequest(index.render("hello, world", form));
+    }
+    else {
+        Task task = form.get();
+        task.save();
+        return redirect(routes.Application.index());
+    }
+}
+```
 
 Load the app in your browser verify that adding an empty Task displays an error:  
 [http://localhost:9000/](http://localhost:9000/)
@@ -764,10 +764,10 @@ Load the app in your browser verify that adding an empty Task displays an error:
 _Read more about [Validation](http://www.playframework.org/documentation/2.0/JavaForms)_
 
 Commit and verify your changes:
-
-    git commit -am "Add validation"
-    git diff upstream/java-validation
-
+```sh
+git commit -am "Add validation"
+git diff upstream/java-validation
+```
 
 
 Update the App on Heroku
@@ -776,12 +776,12 @@ Update the App on Heroku
 Heroku provides each application with a small, free PostgreSQL database.  To switch the application to use that database only when it's running on Heroku, two small changes need to be made.
 
 First, add the PostgreSQL database driver as a dependency of the application by `project/Build.scala` file with the following:
-
-          val appDependencies = Seq(
-            "com.github.twitter" % "bootstrap" % "2.0.2",
-            "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
-          )
-
+```scala
+val appDependencies = Seq(
+    "com.github.twitter" % "bootstrap" % "2.0.2",
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+)
+```
 
 Then update the `Procfile` to override the default database settings when Heroku runs the app:
 
@@ -789,10 +789,10 @@ Then update the `Procfile` to override the default database settings when Heroku
 
 
 Commit and verify your changes:
-
-    git commit -am "Updates for PostgreSQL on Heroku"
-    git diff upstream/java-heroku_update
-
+```sh
+git commit -am "Updates for PostgreSQL on Heroku"
+git diff upstream/java-heroku_update
+```
 
 Push your updates to Heroku:
 
