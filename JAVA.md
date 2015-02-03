@@ -1,27 +1,17 @@
 # Welcome to the Play2torial for Java!
 ====================================
 
-This tutorial will help teach you how to build Java web applications with Play Framework 2.
+This tutorial will help teach you how to build Java web applications with Play Framework 2.3.
 
-Before you get started you will need to install [git](http://git-scm.com/) and [Play 2](http://www.playframework.org/documentation/2.0.1/Installing).
-
-
-Test that the `play` command works by running:
-
-    play help
+Before you get started you will need to install [git](http://git-scm.com/) and [Play 2.3](https://www.playframework.com/documentation/2.3.x/Installing). You will complete this by installing the Typesafe Activator tool.
 
 
-You should see something like:
+Test that the `activator` command works by running:
 
-           _            _ 
-     _ __ | | __ _ _  _| |
-    | '_ \| |/ _' | || |_|
-    |  __/|_|\____|\__ (_)
-    |_|            |__/ 
-             
-    play! 2.0.1, http://www.playframework.org
-    
-    Welcome to Play 2.0!
+    activator -help
+
+
+You should see text displaying optional commands for the activator tool. If you do not, repeat the above process and make sure you are downloading the most recent version of Play (2.3.7).
 
 
 Alright!  You are ready to go!
@@ -31,11 +21,11 @@ Alright!  You are ready to go!
 Create a Play App
 -----------------
 
-Create a new Play 2 application named "play2torial" by running:
+Create a new Play 2.3 application named "play2torial" by running:
 
-    play new play2torial
+    activator new play2torial
 
-When prompted select option 2 to create a Java application.
+When prompted select option 5 `play-java` to create a Java application.
 
 
 In the newly created `play2torial` directory create a new git repository by running:
@@ -70,19 +60,14 @@ Note: The `application.secret` config value will be different and that is fine. 
 Set up an IDE
 -------------
 
-Before we take a tour of the app you can optionally generate project files for IntelliJ or Eclipse.
+Before we take a tour of the app you can optionally generate project files for Eclipse. This is highly recommended.
 
-For IntelliJ run:
-
-    play idea
-
-Then create a new Java project from scratch in IntelliJ that uses this directory as the root.  Don't create a module with the new project.  Instead, once the project is created, import the generated play2torial.iml file as an existing module.
 
 For Eclipse run:
 
-    play eclipsify
+    activator eclipse
 
-_Read more about [IDE:s](http://www.playframework.org/documentation/2.0/IDE)_
+_Read more about [IDE's](https://www.playframework.com/documentation/2.3.x/IDE)_
 
 If you do a `git status` then you will see some uncommitted files.  Those shouldn't go into the git repo so add the following lines to the `.gitignore` file:
 
@@ -103,12 +88,12 @@ Start the Play Server
 
 Now start the Play app by running:
 
-    play ~run
+    activator run
 
 Open the following URL in your browser to verify the app is working:  
 [http://localhost:9000/](http://localhost:9000/)
 
-_Read more about the [Play Console](http://www.playframework.org/documentation/2.0/PlayConsole)_
+_Read more about the [Play Console](https://www.playframework.com/documentation/2.3.x/PlayConsole)_
 
 Routes
 ------
@@ -130,7 +115,7 @@ Now try to open the following URL in your browser:
 
 You should see the same welcome message as your did when you made the request to the `/` URL.
 
-_Read more about [Routing](http://www.playframework.org/documentation/2.0/JavaRouting)_
+_Read more about [Routing](https://www.playframework.com/documentation/2.3.x/JavaRouting)_
 
 Commit and verify your changes:
 ```sh
@@ -163,10 +148,10 @@ public class FooTest {
 
 That simple test will simulate a call to `/foo` and validate that the result was not null.  Run the test (you can keep the Play server running in another window):
 
-    play test
+    activator test
 
 
-You should see something like:
+You should see something similiar to:
 
     [info] FooTest
     [info] + FooTest.testFooRoute
@@ -177,7 +162,7 @@ You should see something like:
     [info] 1 tests, 0 failures, 0 errors
     [info] Passed: : Total 1, Failed 0, Errors 0, Passed 1, Skipped 0
 
-_Read more about [Testing Routes](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
+_Read more about [Testing Routes](https://www.playframework.com/documentation/2.3.x/JavaFunctionalTest)_
 
 Commit and verify your changes:
 ```sh
@@ -236,7 +221,7 @@ public class ApplicationTest {
 ```
 This simulates a request to the `Application.index()` controller method and verifies that the response is what we expect.  Run the test:
 
-    play test
+    activator test
 
 
 You should see something like:
@@ -257,7 +242,7 @@ You should see something like:
     [info] 1 tests, 0 failures, 0 errors
     [info] Passed: : Total 2, Failed 0, Errors 0, Passed 2, Skipped 0
 
-_Read more about [Testing Controllers](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
+_Read more about [Testing Controllers](https://www.playframework.com/documentation/2.3.x/JavaFunctionalTest)_
 
 Commit and verify that your changes:
 ```sh
@@ -300,9 +285,9 @@ assertThat(contentAsString(result)).contains("HELLO, WORLD");
 
 Run the tests:
 
-    play test
+    activator test
 
-_Read more about [Templating](http://www.playframework.org/documentation/2.0/JavaTemplates) and [Template Use Cases](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
+_Read more about [Templating](https://www.playframework.com/documentation/2.3.x/JavaTemplates) and [Template Use Cases](https://www.playframework.com/documentation/2.3.x/JavaTemplateUseCases)_
 
 Commit and verify that your changes:
 ```sh
@@ -335,7 +320,7 @@ public class IndexTest {
 ```
 Run the tests:
 
-    play test
+    activator test
 
 You should see something like:
 
@@ -362,7 +347,7 @@ You should see something like:
     [info] 1 tests, 0 failures, 0 errors
     [info] Passed: : Total 3, Failed 0, Errors 0, Passed 3, Skipped 0
 
-_Read more about [Testing Templates](http://www.playframework.org/documentation/2.0/JavaFunctionalTest)_
+_Read more about [Testing Templates](https://www.playframework.com/documentation/2.3.x/JavaFunctionalTest)_
 
 Verify that your changes:
 ```sh
@@ -423,7 +408,7 @@ Open the application, now running on the cloud, in your browser:
 Create a Model
 --------------
 
-Play 2 with Java uses [Ebean](http://www.avaje.org/) for RDBMS persistence.  To setup a data source edit the `conf/application.conf` file and uncomment these lines:
+Play 2.3 with Java uses [Ebean](http://www.avaje.org/) for RDBMS persistence.  To setup a data source, edit the `conf/application.conf` file and uncomment these lines:
 ```properties
 db.default.driver=org.h2.Driver
 db.default.url="jdbc:h2:mem:play"
@@ -483,12 +468,12 @@ public class TaskTest {
 
 Run the tests and make sure all four pass:
 
-    play test
+    activator test
 
 
 Ebean will automatically create a new database evolution script for you in a file named `conf/evolutions/default/1.sql`.
 
-_Read more about [EBean ORM Models](http://www.playframework.org/documentation/2.0/JavaEbean) [Fake Application](http://www.playframework.org/documentation/2.0/JavaTest)_
+_Read more about [EBean ORM Models](https://www.playframework.com/documentation/2.3.x/JavaEbean)_
 
 Commit and verify your changes:
 ```sh
@@ -540,7 +525,7 @@ You will be prompted to run the database evolutions.  Just click the `Apply this
 
 Add a new `Task` and the browser should refresh the index page.
 
-_Read more about [Forms](http://www.playframework.org/documentation/2.0/JavaForms) and [Templates](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
+_Read more about [Forms](https://www.playframework.com/documentation/2.3.x/JavaForms) and [Templates](https://www.playframework.com/documentation/2.3.x/JavaFormHelpers)_
 
 Commit and verify your changes:
 ```sh
@@ -595,7 +580,7 @@ In the body of the `app/views/index.scala.html` file add a place to display the 
 
 Create a new file named `app/assets/javascripts/index.coffee` (and create the necessary directories) containing a simple CoffeeScript application that uses jQuery to load and display the tasks:
 ```coffee
-$ ->
+->
   $.get "/tasks", (data) ->
     $.each data, (index, task) ->
       $("#tasks").append $("<li>").text task.contents
@@ -605,7 +590,7 @@ This makes a `get` request to `/tasks` for the JSON serialized list of `Task` ob
 
 Update the `app/views/main.scala.html` file to include the compiled and minified version of the `index.coffee` JavaScript by adding the following after the line that includes jQuery:
 ```html
-<script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/index.js")" type="text/javascript"></script>
 ```
 
 Check out the app in your browser and verify that the list of tasks is displayed:  
@@ -613,7 +598,7 @@ Check out the app in your browser and verify that the list of tasks is displayed
 
 To see the non-minified version of the compiled javascript you can go to [http://localhost:9000/assets/javascripts/index.js](http://localhost:9000/assets/javascripts/index.js)
 
-_Read more about [Assets](http://www.playframework.org/documentation/2.0/Assets) and [CoffeeScript](http://www.playframework.org/documentation/2.0/AssetsCoffeeScript)_
+_Read more about [Assets](https://www.playframework.com/documentation/2.3.x/Assets) and [CoffeeScript](https://www.playframework.com/documentation/2.3.x/AssetsCoffeeScript)_
 
 Commit and verify your changes:
 ```sh
@@ -642,8 +627,10 @@ Now restart the Play server so that it will fetch the new dependency.  To use Bo
 ```html
 <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
 ```
-Add the following mapping to the routes file
+Add the following mapping to the routes file:
+```
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
+```
 
 
 Add the following to the `public/stylesheets/main.css` file in order to move the main content down to a viewable location:
@@ -698,7 +685,7 @@ Update the `app/views/index.scala.html` file to use Bootstrap for a nice header,
 The template now takes a second parameter that is a `Form[Task]` and must be passed to the template.  This will be used for helping with form validation.  Update the `index()` method in the `app/controllers/Application.java` file to pass the new required parameter:
 ```java
 public static Result index() {
-    return ok(index.render("hello, world", form(Task.class)));
+    return ok(index.render("hello, world", Form.form(Task.class)));
 }
 ```
 
@@ -709,18 +696,18 @@ import models.Task;
 ```
 Update the first line of the `indexTemplate` test method:
 ```java
-Content html = views.html.index.render("test", new Form(Task.class));
+Content html = views.html.index.render("test", new Form.form(Task.class));
 ```
 
 Run the tests to make sure they still pass:
 
-    play test
+    activator test
 
 
 Load the app in your browser and verify it still works:  
 [http://localhost:9000/](http://localhost:9000/)
 
-_Read more about [Templates](http://www.playframework.org/documentation/2.0/JavaTemplateUseCases)_
+_Read more about [Templates](https://www.playframework.com/documentation/2.3.x/JavaTemplates)_
 
 Commit and verify your changes:
 ```bash
@@ -746,7 +733,7 @@ public String contents;
 Update the `addTask` method on the `app/controllers/Application.java` controller to check for form errors and if it sees any then render the form instead of trying to save the Task:
 ```java
 public static Result addTask() {
-    Form<Task> form = form(Task.class).bindFromRequest();
+    Form<Task> form = Form.form(Task.class).bindFromRequest();
     if (form.hasErrors()) {
         return badRequest(index.render("hello, world", form));
     }
@@ -761,7 +748,7 @@ public static Result addTask() {
 Load the app in your browser verify that adding an empty Task displays an error:  
 [http://localhost:9000/](http://localhost:9000/)
 
-_Read more about [Validation](http://www.playframework.org/documentation/2.0/JavaForms)_
+_Read more about [Validation](https://www.playframework.com/documentation/2.3.x/JavaForms)_
 
 Commit and verify your changes:
 ```sh
@@ -804,8 +791,7 @@ View your app on the cloud:
     heroku open
 
 
-
 Congratulations!
 ----------------
 
-You've built a Play 2 app and deployed it on the cloud.  You've learned how to get started with Play 2, Ebean, CoffeeScript, Twitter Bootstrap, jQuery, RESTful JSON services, and Heroku.  Have fun as you continue to learn Play 2!
+You've built a Play 2.3 app and deployed it on the cloud.  You've learned how to get started with Play 2.3, Ebean, CoffeeScript, Twitter Bootstrap, jQuery, RESTful JSON services, and Heroku.  Have fun as you continue to learn Play 2.3!
