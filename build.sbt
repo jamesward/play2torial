@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += "org.webjars" % "jquery" % "1.11.2"
+
+libraryDependencies += "org.webjars" % "bootstrap" % "2.1.1"
