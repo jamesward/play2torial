@@ -2,6 +2,10 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message.toUpperCase, style = "Java")
+    @message.toUpperCase
 
+    @helper.form(action = routes.Application.addTask()) {
+        <input name="contents"/>
+        <input type="submit"/>
+    }
 }
